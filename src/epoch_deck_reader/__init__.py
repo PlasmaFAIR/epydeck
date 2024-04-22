@@ -1,5 +1,5 @@
 from ast import literal_eval
-from io import TextIOBase
+from io import TextIOBase, StringIO
 from collections import defaultdict
 
 
@@ -41,7 +41,9 @@ def _parse_block(line: str, fh: TextIOBase) -> dict:
         if line.lower().startswith("end:"):
             _, end_name = line.split(":")
             if end_name != name:
-                raise ValueError(f"Block name mismatch: expected '{name}', got '{end_name}'")
+                raise ValueError(
+                    f"Block name mismatch: expected '{name}', got '{end_name}'"
+                )
             break
 
         # Handle special keywords
@@ -66,8 +68,8 @@ def _parse_block(line: str, fh: TextIOBase) -> dict:
     return name, result
 
 
-def parse(fh: TextIOBase) -> dict:
-    """Parse a whole EPOCH input deck into a Python dict"""
+def load(fh: TextIOBase) -> dict:
+    """Load a whole EPOCH input deck into a Python dict"""
     result = defaultdict(dict)
 
     for line in fh:
@@ -90,3 +92,10 @@ def parse(fh: TextIOBase) -> dict:
             continue
 
     return dict(result)
+
+
+def loads(text: str) -> dict:
+    """Load an EPOCH deck from a string"""
+
+    with StringIO(text) as fh:
+        return load(fh)

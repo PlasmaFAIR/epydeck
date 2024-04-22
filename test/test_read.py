@@ -1,6 +1,4 @@
-from epoch_deck_reader import parse
-
-from io import StringIO
+from epoch_deck_reader import loads
 
 
 def test_basic_block():
@@ -13,8 +11,7 @@ def test_basic_block():
     end:block
     """
 
-    with StringIO(text) as fh:
-        data = parse(fh)
+    data = loads(text)
 
     expected = {"block": {"a": 1, "b": 2e3, "c": "electron", "d": "10 * femto"}}
 
@@ -31,8 +28,7 @@ def test_repeated_line():
     end:block
     """
 
-    with StringIO(text) as fh:
-        data = parse(fh)
+    data = loads(text)
 
     expected = {"block": {"a": 1, "b": 2, "c": [3, 4]}}
 
@@ -56,8 +52,7 @@ def test_repeated_block():
     end:block
     """
 
-    with StringIO(text) as fh:
-        data = parse(fh)
+    data = loads(text)
 
     expected = {
         "block": {
@@ -78,8 +73,7 @@ def test_include_species():
     end:dist_fn
     """
 
-    with StringIO(text) as fh:
-        data = parse(fh)
+    data = loads(text)
 
     expected = {"dist_fn": {"a": 1, "include_species": ["electron", "proton"]}}
 
