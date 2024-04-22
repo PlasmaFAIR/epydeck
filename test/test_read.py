@@ -8,12 +8,23 @@ def test_basic_block():
       b = 2e3
       c = electron
       d = 10 * femto
+      e = F
+      f = T
     end:block
     """
 
     data = loads(text)
 
-    expected = {"block": {"a": 1, "b": 2e3, "c": "electron", "d": "10 * femto"}}
+    expected = {
+        "block": {
+            "a": 1,
+            "b": 2e3,
+            "c": "electron",
+            "d": "10 * femto",
+            "e": False,
+            "f": True,
+        }
+    }
 
     assert expected == data
 

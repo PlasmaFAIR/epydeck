@@ -60,6 +60,11 @@ def _parse_block(line: str, fh: TextIOBase) -> dict:
         except (ValueError, SyntaxError):
             value = value.strip()
 
+        if value == "F":
+            value = False
+        elif value == "T":
+            value = True
+
         result[key].append(value)
 
     # Strip out useless lists
@@ -103,6 +108,8 @@ def loads(text: str) -> dict:
 
 def _dump_line(fh: TextIOBase, key: str, value):
     separator = ":" if key == "include_species" else " ="
+    if isinstance(value, bool):
+        value = "T" if value else "F"
     fh.write(f"  {key}{separator} {value}\n")
 
 

@@ -11,12 +11,23 @@ def test_basic_block():
           b = 2.3
           c = electron
           d = 10 * femto
+          e = F
+          f = T
         end:block
 
         """
     )
 
-    deck = {"block": {"a": 1, "b": 2.3, "c": "electron", "d": "10 * femto"}}
+    deck = {
+        "block": {
+            "a": 1,
+            "b": 2.3,
+            "c": "electron",
+            "d": "10 * femto",
+            "e": False,
+            "f": True,
+        }
+    }
     result = dumps(deck)
 
     assert expected == result
