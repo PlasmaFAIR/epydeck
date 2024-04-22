@@ -42,19 +42,26 @@ def _parse_block(line: str, fh: TextIOBase) -> dict:
             separator = ":"
         else:
             separator = "="
+
         key, value = line.split(separator)
+        key = key.strip()
 
         try:
             value = literal_eval(value)
         except (ValueError, SyntaxError):
             value = value.strip()
-        result[key.strip()].append(value)
+
+        result[key].append(value)
+
+    # Strip out useless lists
+    result = {k: v[0] if len(v) == 1 else v for k, v in result.items()}
 
     return name, result
 
 
 def parse(fh: TextIOBase) -> dict:
-    result = defaultdict(list)
+    """Parse a whole EPOCH input deck into a Python dict"""
+    result = defaultdict(dict)
 
     for line in fh:
         line = _strip_comment(line).strip()
@@ -65,10 +72,14 @@ def parse(fh: TextIOBase) -> dict:
 
         if line.lower().startswith("begin:"):
             block_name, block = _parse_block(line, fh)
-            result[block_name].append(block)
+
+            if "name" in block:
+                block = {block["name"]: block}
+
+            result[block_name] |= block
 
         if line.lower().startswith("import:"):
             # TODO
             continue
 
-    return result
+    return dict(result)

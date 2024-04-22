@@ -16,9 +16,7 @@ def test_basic_block():
     with StringIO(text) as fh:
         data = parse(fh)
 
-    expected = {
-        "block": [{"a": [1], "b": [2e3], "c": ["electron"], "d": ["10 * femto"]}]
-    }
+    expected = {"block": {"a": 1, "b": 2e3, "c": "electron", "d": "10 * femto"}}
 
     assert expected == data
 
@@ -36,7 +34,7 @@ def test_repeated_line():
     with StringIO(text) as fh:
         data = parse(fh)
 
-    expected = {"block": [{"a": [1], "b": [2], "c": [3, 4]}]}
+    expected = {"block": {"a": 1, "b": 2, "c": [3, 4]}}
 
     assert expected == data
 
@@ -44,12 +42,14 @@ def test_repeated_line():
 def test_repeated_block():
     text = """
     begin:block
+      name = first
       a = 1
       b = 2
       c = 3
     end:block
 
     begin:block
+      name = second
       a = 4
       b = 5
       c = 6
@@ -60,10 +60,10 @@ def test_repeated_block():
         data = parse(fh)
 
     expected = {
-        "block": [
-            {"a": [1], "b": [2], "c": [3]},
-            {"a": [4], "b": [5], "c": [6]},
-        ]
+        "block": {
+            "first": {"name": "first", "a": 1, "b": 2, "c": 3},
+            "second": {"name": "second", "a": 4, "b": 5, "c": 6},
+        }
     }
 
     assert expected == data
@@ -81,6 +81,6 @@ def test_include_species():
     with StringIO(text) as fh:
         data = parse(fh)
 
-    expected = {"dist_fn": [{"a": [1], "include_species": ["electron", "proton"]}]}
+    expected = {"dist_fn": {"a": 1, "include_species": ["electron", "proton"]}}
 
     assert expected == data
