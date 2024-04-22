@@ -4,6 +4,8 @@ from collections import defaultdict
 
 
 def _strip_comment(line: str) -> str:
+    """Remove comments from line"""
+
     comment_start = line.find("#")
     if comment_start < 0:
         return line
@@ -12,6 +14,7 @@ def _strip_comment(line: str) -> str:
 
 
 def _join_lines(line: str, fh: TextIOBase) -> str:
+    """Handle escaped newlines"""
     while "\\" in line:
         next_line = next(fh)
         clean_line = line.replace("\\", "").strip()
@@ -21,6 +24,7 @@ def _join_lines(line: str, fh: TextIOBase) -> str:
 
 
 def _parse_block(line: str, fh: TextIOBase) -> dict:
+    """Parse a single options block into a dict"""
     result = defaultdict(list)
 
     _, name = line.split(":")
@@ -29,15 +33,18 @@ def _parse_block(line: str, fh: TextIOBase) -> dict:
         line = _strip_comment(line).strip()
         line = _join_lines(line, fh)
 
+        # Handle empty lines
         if not line:
             continue
 
+        # Handle end of block
         if line.lower().startswith("end:"):
             _, end_name = line.split(":")
             if end_name != name:
                 raise ValueError(f"Block name mismatch: expected '{name}', got '{end_name}'")
             break
 
+        # Handle special keywords
         if line.lower().startswith("include_species:"):
             separator = ":"
         else:
