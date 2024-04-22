@@ -12,15 +12,17 @@ def _strip_comment(line: str) -> str:
 
 def _join_lines(line: str, fh: TextIOBase) -> str:
     while "\\" in line:
-        next_line = next(fh).strip()
+        next_line = next(fh)
         clean_line = line.replace("\\", "").strip()
-        line = f"{clean_line} {next_line}"
+        line = f"{clean_line} {next_line.strip()}"
 
     return line
 
 
-def _parse_block(fh: TextIOBase) -> dict:
+def _parse_block(line: str, fh: TextIOBase) -> dict:
     result = defaultdict(list)
+
+    _, name = line.split(":")
 
     for line in fh:
         line = _strip_comment(line).strip()
@@ -30,16 +32,24 @@ def _parse_block(fh: TextIOBase) -> dict:
             continue
 
         if line.lower().startswith("end:"):
+            _, end_name = line.split(":")
+            if end_name != name:
+                raise ValueError(f"Block name mismatch: expected '{name}', got '{end_name}'")
             break
 
-        key, value = line.split("=")
-        result[key].append(value)
+        if line.lower().startswith("include_species:"):
+            key, value = line.split(":")
+            result[key.strip()].append(value.strip())
+            continue
 
-    return result
+        key, value = line.split("=")
+        result[key.strip()].append(value.strip())
+
+    return name, result
 
 
 def parse(fh: TextIOBase) -> dict:
-    result = dict()
+    result = defaultdict(list)
 
     for line in fh:
         line = _strip_comment(line).strip()
@@ -49,7 +59,11 @@ def parse(fh: TextIOBase) -> dict:
             continue
 
         if line.lower().startswith("begin:"):
-            block_name, block = _parse_block(fh)
-            result[block_name] = block
+            block_name, block = _parse_block(line, fh)
+            result[block_name].append(block)
+
+        if line.lower().startswith("import:"):
+            # TODO
+            continue
 
     return result
