@@ -1,3 +1,4 @@
+from ast import literal_eval
 from io import TextIOBase
 from collections import defaultdict
 
@@ -38,12 +39,16 @@ def _parse_block(line: str, fh: TextIOBase) -> dict:
             break
 
         if line.lower().startswith("include_species:"):
-            key, value = line.split(":")
-            result[key.strip()].append(value.strip())
-            continue
+            separator = ":"
+        else:
+            separator = "="
+        key, value = line.split(separator)
 
-        key, value = line.split("=")
-        result[key.strip()].append(value.strip())
+        try:
+            value = literal_eval(value)
+        except (ValueError, SyntaxError):
+            value = value.strip()
+        result[key.strip()].append(value)
 
     return name, result
 
