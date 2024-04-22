@@ -99,3 +99,39 @@ def loads(text: str) -> dict:
 
     with StringIO(text) as fh:
         return load(fh)
+
+
+def _dump_line(fh: TextIOBase, key: str, value):
+    separator = ":" if key == "include_species" else " ="
+    fh.write(f"  {key}{separator} {value}\n")
+
+
+def _dump_block(fh: TextIOBase, name: str, block: dict):
+    fh.write(f"begin:{name}\n")
+
+    for key, values in block.items():
+        if not isinstance(values, list):
+            values = [values]
+        for value in values:
+            _dump_line(fh, key, value)
+
+    fh.write(f"end:{name}\n\n")
+
+
+def dump(deck: dict, fh: TextIOBase):
+    """Write EPOCH deck to the open file object"""
+
+    for name, block in deck.items():
+        # Is this one of multiple blocks?
+        if isinstance(list(block.values())[0], dict):
+            for subblock in block.values():
+                _dump_block(fh, name, subblock)
+        else:
+            _dump_block(fh, name, block)
+
+
+def dumps(deck: dict) -> str:
+    """Write EPOCH deck to string"""
+    fh = StringIO()
+    dump(deck, fh)
+    return fh.getvalue()
