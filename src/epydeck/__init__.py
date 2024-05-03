@@ -142,3 +142,19 @@ def dumps(deck: dict) -> str:
     fh = StringIO()
     dump(deck, fh)
     return fh.getvalue()
+
+
+def deep_update(deck: dict, *deck_patches: dict) -> dict:
+    """Update `deck` recursively (like `dict.update` without
+    clobbering the nested dicts)
+
+    Lightly adapted from pydantic, MIT licence
+    """
+    updated_deck = deck.copy()
+    for deck_patch in deck_patches:
+        for k, v in deck_patch.items():
+            if k in updated_deck and isinstance(updated_deck[k], dict) and isinstance(v, dict):
+                updated_deck[k] = deep_update(updated_deck[k], v)
+            else:
+                updated_deck[k] = v
+    return updated_deck
