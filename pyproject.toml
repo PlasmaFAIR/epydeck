@@ -7,7 +7,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "epoch_deck_reader"
+name = "epydeck"
 authors = [
         {name = "Peter Hill", email = "peter.hill@york.ac.uk"}
 ]
@@ -28,7 +28,7 @@ tests = [
 ]
 
 [tool.setuptools_scm]
-write_to = "src/epoch_deck_reader/_version.py"
+write_to = "src/epydeck/_version.py"
 
 [tool.ruff]
 line-length = 88

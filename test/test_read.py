@@ -1,4 +1,4 @@
-from epoch_deck_reader import loads
+from epydeck import loads
 
 
 def test_basic_block():

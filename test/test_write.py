@@ -1,4 +1,4 @@
-from epoch_deck_reader import dumps, loads
+from epydeck import dumps, loads
 
 from textwrap import dedent
 
