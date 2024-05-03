@@ -56,7 +56,7 @@ def _parse_block(line: str, fh: TextIOBase) -> dict:
         key = key.strip()
 
         try:
-            value = literal_eval(value)
+            value = literal_eval(value.strip())
         except (ValueError, SyntaxError):
             value = value.strip()
 
