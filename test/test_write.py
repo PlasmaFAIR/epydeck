@@ -1,4 +1,4 @@
-from epydeck import dumps, loads
+from epydeck import dumps, dump, load
 
 from textwrap import dedent
 
@@ -99,3 +99,29 @@ def test_include_species():
     result = dumps(deck)
 
     assert expected == result
+
+
+def test_write_to_file(tmp_path):
+    deck = {
+        "repeated_block": {
+            "first": {"name": "first", "a": 1, "b": 2, "c": 3},
+            "second": {"name": "second", "a": 4, "b": 5, "c": 6},
+        },
+        "block": {
+            "a": 1,
+            "b": 2.3,
+            "c": "electron",
+            "d": "10 * femto",
+            "e": False,
+            "f": True,
+        },
+    }
+
+    filename = tmp_path / "test.in"
+    with open(filename, "w") as f:
+        dump(deck, f)
+
+    with open(filename, "r") as f:
+        data = load(f)
+
+    assert data == deck

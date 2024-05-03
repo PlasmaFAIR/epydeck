@@ -1,4 +1,6 @@
-from epydeck import loads
+from epydeck import loads, load
+
+import pathlib
 
 
 def test_basic_block():
@@ -89,3 +91,15 @@ def test_include_species():
     expected = {"dist_fn": {"a": 1, "include_species": ["electron", "proton"]}}
 
     assert expected == data
+
+
+def test_read_file():
+    filename = pathlib.Path(__file__).parent / "cone.deck"
+
+    with open(filename) as f:
+        data = load(f)
+
+    assert "control" in data
+    assert "species" in data
+    assert "proton" in data["species"]
+    assert "electron" in data["species"]
