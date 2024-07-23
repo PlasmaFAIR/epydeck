@@ -121,8 +121,10 @@ begin:dist_fn
   resolution1 = 1
   resolution2 = 100
 
-  include_species:electron
-  include_species:proton
+  include_species:Electron
+  include_species:Proton
+
+  identify:Photon
 end:dist_fn
 
 
@@ -145,6 +147,8 @@ begin:dist_fn
   resolution2 = 100
   resolution3 = 100
 
-  include_species:electron
-  include_species:proton
+  include_species:Electron
+  include_species:Proton
+
+  identify:Photon
 end:dist_fn
