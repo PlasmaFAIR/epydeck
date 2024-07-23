@@ -109,10 +109,10 @@ def loads(text: str) -> dict:
 
 
 def _dump_line(fh: TextIOBase, key: str, value):
-    separator = ":" if key in special_keywords else " ="
+    separator = ":" if key in special_keywords else " = "
     if isinstance(value, bool):
         value = "T" if value else "F"
-    fh.write(f"  {key}{separator} {value}\n")
+    fh.write(f"  {key}{separator}{value}\n")
 
 
 def _dump_block(fh: TextIOBase, name: str, block: dict):
