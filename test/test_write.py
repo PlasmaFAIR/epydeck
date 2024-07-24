@@ -1,5 +1,4 @@
-from epydeck import dumps, dump, load
-
+import epydeck
 from textwrap import dedent
 
 
@@ -28,7 +27,7 @@ def test_basic_block():
             "f": True,
         }
     }
-    result = dumps(deck)
+    result = epydeck.dumps(deck)
 
     assert expected == result
 
@@ -47,7 +46,7 @@ def test_repeated_line():
     )
 
     deck = {"block": {"a": 1, "b": 2, "c": [3, 4]}}
-    result = dumps(deck)
+    result = epydeck.dumps(deck)
 
     assert expected == result
 
@@ -78,7 +77,7 @@ def test_repeated_block():
             "second": {"name": "second", "a": 4, "b": 5, "c": 6},
         }
     }
-    result = dumps(deck)
+    result = epydeck.dumps(deck)
 
     assert expected == result
 
@@ -88,15 +87,33 @@ def test_include_species():
         """\
         begin:dist_fn
           a = 1
-          include_species: electron
-          include_species: proton
+          include_species:Electron
+          include_species:Proton
         end:dist_fn
     
         """
     )
 
-    deck = {"dist_fn": {"a": 1, "include_species": ["electron", "proton"]}}
-    result = dumps(deck)
+    deck = {"dist_fn": {"a": 1, "include_species": ["Electron", "Proton"]}}
+    result = epydeck.dumps(deck)
+
+    assert expected == result
+
+
+def test_include_identify():
+    expected = dedent(
+        """\
+        begin:dist_fn
+          a = 1
+          identify:Electron
+          identify:Proton
+        end:dist_fn
+    
+        """
+    )
+
+    deck = {"dist_fn": {"a": 1, "identify": ["Electron", "Proton"]}}
+    result = epydeck.dumps(deck)
 
     assert expected == result
 
@@ -119,9 +136,9 @@ def test_write_to_file(tmp_path):
 
     filename = tmp_path / "test.in"
     with open(filename, "w") as f:
-        dump(deck, f)
+        epydeck.dump(deck, f)
 
     with open(filename, "r") as f:
-        data = load(f)
+        data = epydeck.load(f)
 
     assert data == deck

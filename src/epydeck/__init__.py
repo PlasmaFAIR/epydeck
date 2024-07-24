@@ -2,6 +2,8 @@ from ast import literal_eval
 from io import TextIOBase, StringIO
 from collections import defaultdict
 
+# Specific deck keywords that use : instead of =
+special_keywords = ["include_species", "identify"]
 
 def _strip_comment(line: str) -> str:
     """Remove comments from line"""
@@ -47,7 +49,7 @@ def _parse_block(line: str, fh: TextIOBase) -> dict:
             break
 
         # Handle special keywords
-        if line.lower().startswith("include_species:"):
+        if any(line.lower().startswith(f"{keyword}:") for keyword in special_keywords):
             separator = ":"
         else:
             separator = "="
@@ -107,10 +109,10 @@ def loads(text: str) -> dict:
 
 
 def _dump_line(fh: TextIOBase, key: str, value):
-    separator = ":" if key == "include_species" else " ="
+    separator = ":" if key in special_keywords else " = "
     if isinstance(value, bool):
         value = "T" if value else "F"
-    fh.write(f"  {key}{separator} {value}\n")
+    fh.write(f"  {key}{separator}{value}\n")
 
 
 def _dump_block(fh: TextIOBase, name: str, block: dict):
