@@ -49,7 +49,7 @@ def _parse_block(line: str, fh: TextIOBase) -> dict:
             break
 
         # Handle special keywords
-        if any(line.lower().startswith(keyword + ":") for keyword in special_keywords):
+        if any(line.lower().startswith(f"{keyword}:") for keyword in special_keywords):
             separator = ":"
         else:
             separator = "="
