@@ -8,25 +8,25 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "epydeck"
+readme = "README.md"
 authors = [
-        {name = "Peter Hill", email = "peter.hill@york.ac.uk"},
-        {name = "Joel Adams", email = "joel.adams@york.ac.uk"}
+    { name = "Peter Hill", email = "peter.hill@york.ac.uk" },
+    { name = "Joel Adams", email = "joel.adams@york.ac.uk" },
 ]
-license = {text = "BSD"}
+license = { file = "LICENCE.md" }
 requires-python = ">=3.9"
 dynamic = ["version"]
+description = "An EPOCH plasma PIC code input file (deck) reader/writer."
 
 [project.optional-dependencies]
 docs = [
-     "sphinx >= 5.3",
-     "sphinx_autodoc_typehints >= 1.19",
-     "sphinx-book-theme >= 0.4.0rc1",
-     "sphinx-argparse-cli >= 1.10.0",
-     "sphinx-inline-tabs",
+    "sphinx >= 5.3",
+    "sphinx_autodoc_typehints >= 1.19",
+    "sphinx-book-theme >= 0.4.0rc1",
+    "sphinx-argparse-cli >= 1.10.0",
+    "sphinx-inline-tabs",
 ]
-tests = [
-      "pytest >= 3.3.0",
-]
+tests = ["pytest >= 3.3.0"]
 
 [tool.setuptools_scm]
 write_to = "src/epydeck/_version.py"
