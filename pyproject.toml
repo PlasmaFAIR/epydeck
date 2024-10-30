@@ -27,10 +27,22 @@ docs = [
     "sphinx-inline-tabs",
 ]
 tests = ["pytest >= 3.3.0"]
+build = ["cibuildwheel[uv]"]
+
 
 [tool.setuptools_scm]
 write_to = "src/epydeck/_version.py"
+local_scheme = "no-local-version"
 
 [tool.ruff]
 line-length = 88
 lint.ignore = ["E501"]
+
+[tool.cibuildwheel]
+build-frontend = "build[uv]"
+skip = ["*-win32", "*-manylinux_i686", "pp*", "*musllinux*"]
+test-extras = ["test"]
+test-command = "pytest {project}/tests"
+
+[tool.uv]
+cache-keys = [{ file = "pyproject.toml" }, { git = true }]
