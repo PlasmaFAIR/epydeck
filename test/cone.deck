@@ -2,7 +2,7 @@ begin:control
   nx = 250
   ny = 250
   nz = 250
-  nparticles = nx * ny * nz * 1.123
+  nparticles = nx * ny * nz * 1.123 # inline with the number density
 
   # Final time of simulation
   t_end = 50 * femto
@@ -26,6 +26,10 @@ begin:boundaries
   bc_z_max = periodic
 end:boundaries
 
+begin:control
+  # Second control block
+  nx = 250
+end:control
 
 begin:constant
   lambda = 1.06 * micron
