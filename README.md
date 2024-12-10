@@ -40,10 +40,12 @@ import epydeck
 
 # Read from a file with `epydeck.load`
 with open(filename) as f:
-    deck = epydeck.load(f)
+    deck, block_order = epydeck.load(f)
 
 print(deck.keys())
 # dict_keys(['control', 'boundaries', 'constant', 'species', 'laser', 'output_global', 'output', 'dist_fn'])
+print(block_order)
+# ['control', 'boundaries', 'constant', 'species', 'laser', 'output_global', 'output', 'dist_fn']
 
 # Modify the deck as a usual python dict:
 deck["species"]["proton"]["charge"] = 2.0
