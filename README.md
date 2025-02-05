@@ -160,7 +160,7 @@ If epydeck contributes to a project that leads to publication, please acknowledg
 
 ![[BEAM.png]]
 
-BEAM is structured as a set of independent yet complementary tools designed for analysing [EPOCH](https://epochpic.github.io/) simulations where researchers can adopt only the components they need, without being constrained by a rigid framework. The packages are as follows:
+BEAM is structured as a set of independent yet complementary open-source tools designed for analysing [EPOCH](https://epochpic.github.io/) simulations where researchers can adopt only the components they need, without being constrained by a rigid framework. The packages are as follows:
 
 - [sdf-xarray](https://github.com/PlasmaFAIR/sdf-xarray): Reading and processing SDF files and converting them to [xarray](https://docs.xarray.dev/en/stable/).
 - [epydeck](https://github.com/PlasmaFAIR/epydeck): Input deck reader and writer.
