@@ -1,11 +1,10 @@
 # epydeck
 
-An EPOCH plasma PIC code input file (deck) reader/writer.
+![PyPI](https://img.shields.io/pypi/v/epydeck?color=blue)
+![Build/Publish](https://github.com/PlasmaFAIR/epydeck/actions/workflows/build_publish.yml/badge.svg)
+![Tests](https://github.com/PlasmaFAIR/epydeck/actions/workflows/tests.yml/badge.svg)
 
-> [!IMPORTANT]
-> Plain numbers and bools are converted directly, everything else is
-> represented as a string. Note that floating point numbers may have
-> their exact form changed.
+An open-source Python project which acts as an [EPOCH](https://epochpic.github.io/) input file (deck) reader/writer. A module of [BEAM](#broad-epoch-analysis-modules-beam) (Broad EPOCH Analysis Modules).
 
 ## Installation
 
@@ -26,6 +25,11 @@ pip install .
 We recommend switching to [uv](https://docs.astral.sh/uv/) to manage packages.
 
 ## Usage
+
+> [!IMPORTANT]
+> Plain numbers and bools are converted directly, everything else is
+> represented as a string. Note that floating point numbers may have
+> their exact form changed.
 
 The interface follows the standard Python
 [`json`](https://docs.python.org/3/library/json.html) module:
@@ -66,7 +70,9 @@ print(epydeck.dumps(deck))
 # ...
 ```
 
-## Further Examples
+<details>
+
+<summary>Further details</summary>
 
 Reads from file into a standard Python `dict`. Repeated blocks, such
 as `species`, have an extra level of nesting using the block `name`.
@@ -143,3 +149,19 @@ is represented by the following `dict`:
   }
 }
 ```
+
+</details>
+
+## Citing
+
+If epydeck contributes to a project that leads to publication, please acknowledge this by citing epydeck. This can be done by clicking the "cite this repository" button located near the top right of this page.
+
+## Broad EPOCH Analysis Modules (BEAM)
+
+![[BEAM.png]]
+
+BEAM is structured as a set of independent yet complementary tools designed for analysing [EPOCH](https://epochpic.github.io/) simulations where researchers can adopt only the components they need, without being constrained by a rigid framework. The packages are as follows:
+
+- [sdf-xarray](https://github.com/PlasmaFAIR/sdf-xarray): Reading and processing SDF files and converting them to [xarray](https://docs.xarray.dev/en/stable/).
+- [epydeck](https://github.com/PlasmaFAIR/epydeck): Input deck reader and writer.
+- [epyscan](https://github.com/PlasmaFAIR/epyscan): Create campaigns over a given parameter space using various sampling methods.
