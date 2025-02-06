@@ -158,7 +158,7 @@ If epydeck contributes to a project that leads to publication, please acknowledg
 
 ## Broad EPOCH Analysis Modules (BEAM)
 
-![[BEAM.png]]
+![BEAM logo](./BEAM.png)
 
 BEAM is structured as a set of independent yet complementary open-source tools designed for analysing [EPOCH](https://epochpic.github.io/) simulations where researchers can adopt only the components they need, without being constrained by a rigid framework. The packages are as follows:
 
