@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: 'epydeck: EPOCH deck reader/writer'
+title: 'epydeck: EPOCH input file reader/writer'
 message: 'If you use this software, please cite it using the metadata from this file.'
 type: software
 repository-code: 'https://github.com/PlasmaFAIR/epydeck'
