@@ -4,7 +4,7 @@
 ![Build/Publish](https://github.com/PlasmaFAIR/epydeck/actions/workflows/build_publish.yml/badge.svg)
 ![Tests](https://github.com/PlasmaFAIR/epydeck/actions/workflows/tests.yml/badge.svg)
 
-An open-source Python project which acts as an [EPOCH](https://epochpic.github.io/) input file (deck) reader/writer. A module of [BEAM](#broad-epoch-analysis-modules-beam) (Broad EPOCH Analysis Modules).
+Epydeck is an [EPOCH](https://epochpic.github.io/) input file (deck) reader/writer. Part of [BEAM](#broad-epoch-analysis-modules-beam) (Broad EPOCH Analysis Modules).
 
 ## Installation
 
